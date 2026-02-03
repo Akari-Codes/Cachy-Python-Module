@@ -1,4 +1,4 @@
-To import this custom module use the import command 'from cacher import cache'.
+To import this custom module use the import command 'from cachy import cache'.
 Usage of module:
 - cache.initialize() - runs the modules setup
 - cache.deposit(data=<data to save>, id=<identifier>) - caches data under the identifier name
