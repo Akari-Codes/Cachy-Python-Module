@@ -1,6 +1,5 @@
-To import this custom module use the import command 'from cachy import cache'.
+To import this custom module use the import command 'from cachy import Cachy' then must be put into a varliaable called cache 'cache = Cachy()'
 Usage of module:
-- cache.initialize() - runs the modules setup
 - cache.deposit(data=<data to save>, id=<identifier>) - caches data under the identifier name
 - <variable> = cache.withdraw.(id=<identifier>) - fetches cached data under the identifier name
 - cache.save(data=<data to save>, id=<identifier>) - save the data and caches under the identifier name
@@ -9,7 +8,9 @@ Usage of module:
 - cache.destroy(id=<identifier>) - destroys cache item under the identifier name
 - cache.destroy_item(id=<identifier>) - destroys the cached item and the saved item under the indentifier name
 - cache.unsave(id=<identifier>) - destroys the saved item under the identifier name
+- cache.session_save(name=<name of session>) - saves the sessions loaded cached data into a cache file the name for the sesion is optional if you dont use the session paramater then itll default to he internal global session name.
+- cache.session_load(name=<name of session>) - laods the sessions saved cached data into cache the name for the sesion is optional if you dont use the session paramater then itll default to he internal global session name.
+- cache.session_clear(name=<name of session>) - clears specified saved session the name is nto required if no name given it will clear the saved session with the defualt session file indentifier
+- cache.sessions_clear_all() - clears all saved sessions does not effect current loaded cache
 - cache.clear() - clears the cache
 - cache.clear_all() - clear the cache and the saved file cache
-
-Always run cache.initialize before module usage to prevent errors and issues.

@@ -1,20 +1,47 @@
 from pathlib import Path
 import os
 import joblib
-class cache:
-    def initialize(self):
+class Cachy:
+    def __init__(self):
         cache_path = Path(os.getcwd() + "/bin/cache/")
-        cache_path.mkdir()
+        if not Path(os.getcwd() + "/bin/").exists():
+            Path(os.getcwd() + "/bin/").mkdir()
+        if not cache_path.exists():
+            cache_path.mkdir()
+        if not Path(os.getcwd() + "/bin/cache/sessions/").exists():
+            Path(os.getcwd() + "/bin/cache/sessions/").mkdir()
         self.cache_container = []
-        runtime = 1
         print("[Alert] Cacher Rutime Initialized!")
+        return
+
+    def session_save(self, name="session_default"):
+        session_path = Path(os.getcwd() + "/bin/cache/sessions/" + name + ".session")
+        session_path.touch()
+        joblib.dump(self.cache_container, session_path)
+        return
+
+    def session_load(self, name="session_default"):
+        session_path = Path(os.getcwd() + "/bin/cache/sessions/" + name + ".session")
+        session_path.touch()
+        self.cache_container = joblib.load(session_path)
+        return
+    
+    def session_clear(self, name="session_default"):
+        session_path = Path(os.getcwd() + "/bin/cache/sessions/" + name + ".session")
+        session_path.touch()
+        os.remove(session_path)
+        return
+    
+    def session_clear_all(self):
+        listed_dir = os.listdir(Path(os.getcwd() + "/bin/cache/sessions/"))
+        for x in listed_dir:
+            if x[-8:] == ".session":
+                session_path = Path(os.getcwd() + "/bin/cache/sessions/" + x)
+                session_path.touch()
+                os.remove(session_path)
         return
     
     def deposit(self, data, id):
-        if runtime == 0:
-            self.cache_container = []
-            print("[Urgent] !Warning Running Cacher without Initalizing can Cause errors please run the initializer function before using cacher!")
-            runtime = 1
         self.cache_container.append({"id":id, "data":data})
         print("[Log] Cached item - " + id)
         return
@@ -50,19 +77,16 @@ class cache:
         return
     
     def save(self, data, id):
-        if runtime == 0:
-            self.cache_container = []
-            print("[Urgent] !Warning Running Cacher without Initalizing can Cause errors please run the initializer function before using cacher!")
-            runtime = 1
         self.cache_container.append({"id":id, "data":data})
         print("[Log] Cached item - " + id)
         print("[Log] Making Local Save of Cached item...")
         cache_path = Path(os.getcwd() + "/bin/cache/")
-        cache_path.mkdir()
-        cache_file_path = Path(str(cache_path) + id + ".tmp")
+        if not cache_path.exists():
+            cache_path.mkdir()
+        cache_file_path = Path(os.getcwd() + "/bin/cache/" + id + ".tmp")
+        print(cache_path)
         cache_file_path.touch()
         for x in self.cache_container:
-            count = count + 1
             if x["id"] == id:
                 data = x["data"]
                 break
@@ -76,7 +100,7 @@ class cache:
     
     def load(self, id):
         cache_path = Path(os.getcwd() + "/bin/cache/")
-        cache_file_path = Path(str(cache_path) + id + ".tmp")
+        cache_file_path = Path(os.getcwd() + "/bin/cache/" + id + ".tmp")
         try:
             with open(cache_file_path, 'r') as f:
                 data = f.read()
@@ -91,10 +115,9 @@ class cache:
     def save_item(self, id):
         cache_path = Path(os.getcwd() + "/bin/cache/")
         cache_path.mkdir()
-        cache_file_path = Path(str(cache_path) + id + ".tmp")
+        cache_file_path = Path(os.getcwd() + "/bin/cache/" + id + ".tmp")
         cache_file_path.touch()
         for x in self.cache_container:
-            count = count + 1
             if x["id"] == id:
                 data = x["data"]
                 break
@@ -107,7 +130,7 @@ class cache:
 
     def destroy_item(self, id):
         cache_path = Path(os.getcwd() + "/bin/cache/")
-        cache_file_path = Path(str(cache_path) + id + ".tmp")
+        cache_file_path = Path(os.getcwd() + "/bin/cache/" + id + ".tmp")
         os.remove(cache_file_path)
         count = -1
         for x in self.cache_container:
@@ -121,7 +144,7 @@ class cache:
 
     def unsave(self, id):
         cache_path = Path(os.getcwd() + "/bin/cache/")
-        cache_file_path = Path(str(cache_path) + id + ".tmp")
+        cache_file_path = Path(os.getcwd() + "/bin/cache/" + id + ".tmp")
         os.remove(cache_file_path)
     
     def clear_all(self):
@@ -130,3 +153,4 @@ class cache:
         for x in files:
             os.remove(Path(os.getcwd() + "/bin/cache/" + x))
         return
+Cachy()
