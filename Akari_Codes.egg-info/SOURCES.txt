@@ -1,0 +1,7 @@
+LICENSE
+README.md
+setup.py
+Akari_Codes.egg-info/PKG-INFO
+Akari_Codes.egg-info/SOURCES.txt
+Akari_Codes.egg-info/dependency_links.txt
+Akari_Codes.egg-info/top_level.txt
