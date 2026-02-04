@@ -50,4 +50,4 @@ This clears the cache and the saved file cache
 
 Feel free to create a fork for this module and edit as you like, but please credit me 😘, the least you can do for me 🥰.
 
-Module by Akari_VT (Akari-Codes): Discord = ```akarigames_VT```
+Module by Akari_VT (Akari-Codes): Discord = ```akarigames_vt```
