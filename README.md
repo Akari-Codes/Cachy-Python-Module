@@ -31,13 +31,13 @@ This destroys the cached item and the saved item under the identifier name
 This destroys the saved item under the identifier name
 - 
 - ```cache.session_save(name=<name of session>)```
-This saves the session's loaded cached data into a cache file. The name for the session is optional; if you don't use the session paramater then itll default to the internal global session name.
+This saves the session's loaded cached data into a cache file. The name for the session is optional; if you don't use the session parameter, then it will default to the internal global session name.
 - 
 - ```cache.session_load(name=<name of session>)```
-This loads the session's saved cached data into cache. The name for the session is optional; if you don't use the session paramater then itll default to the internal global session name.
+This loads the session's saved cached data into the cache. The name for the session is optional; if you don't use the session parameter, then it will default to the internal global session name.
 - 
 - ```cache.session_clear(name=<name of session>)```
-This clears the specified saved session. The name is not required; if no name is given, it will clear the saved session with the default session file indentifier
+This clears the specified saved session. The name is not required; if no name is given, it will clear the saved session with the default session file identifier.
 - 
 - ```cache.sessions_clear_all()```
 This clears all saved sessions, does not effect current loaded cache
@@ -47,3 +47,7 @@ This clears the cache
 - 
 - ```cache.clear_all()```
 This clears the cache and the saved file cache
+
+Feel free to create a fork for this module and edit as you like, but please credit me 😘, the least you can do for me 🥰.
+
+Module by Akari_VT (Akari-Codes): Discord = ```akarigames_VT```
