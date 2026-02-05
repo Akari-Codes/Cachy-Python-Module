@@ -1,24 +1,3 @@
-import setuptools
-
-with open("README.md", "r") as fh:
-    long_description = fh.read()
-
-setuptools.setup(
-    name="Cachy",
-    version="1.1",
-    author="Akari-Codes",
-    author_email="akari+cachy@astil-industries.com",
-    description="",
-    long_description=long_description,
-    long_description_content_type="text/markdown",
-    url="https://github.com/Akari-Codes/Cachy-Python-Module",
-    packages=setuptools.find_packages(),
-    classifiers=[
-        "Programming Language :: Python :: 3",
-        "License :: OSI Approved :: MIT License",
-        "Operating System :: OS Independent",
-    ],
-)
 from distutils.core import setup
 setup(
   name = 'Cachy',         # How you named your package folder (MyLib)
@@ -29,7 +8,7 @@ setup(
   author = 'Akari',                   # Type in your name
   author_email = 'akari@astil-industries.com',      # Type in your E-Mail
   url = 'https://github.com/Akari-Codes/Cachy-Python-Module/',   # Provide either the link to your github or to your website
-  download_url = '',    # I explain this later on
+  download_url = 'https://github.com/Akari-Codes/Cachy-Python-Module/archive/refs/tags/V1.1.tar.gz',    # I explain this later on
   keywords = ['Cache', 'Efficent', 'Useful'],   # Keywords that define your package best
   install_requires=['pathlib', 'joblib'],
   classifiers=[
