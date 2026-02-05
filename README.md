@@ -1,5 +1,7 @@
 # Cachy
 
+[![Cachy](https://github.com/Akari-Codes/Cachy-Python-Module/actions/workflows/python-publish.yml/badge.svg?branch=main&event=status)](https://github.com/Akari-Codes/Cachy-Python-Module/actions/workflows/python-publish.yml)
+
 Cachy is a simple Module I have written for my own ease of use, and I decided to release it as a public module so other people can use it. Cachy allows use to add pass data into it and saves it to a single index but can also save the entire index or a single data from the index when using the save feature you can have multiple programs share variabls without having to setup a local data tunnel also allows you to have files saved in the cache meaning you can have the system load a cached file when it isnt in the index that was from a previous session into the current session.
 
 ## How to Use Cachy
