@@ -156,4 +156,10 @@ class Cachy:
         for x in files:
             os.remove(Path(os.getcwd() + "/bin/cache/" + x))
         return
+
+    def edit(self, data, id):
+        for x in self.cache_container:
+            if x["id"] == id:
+                x["data"] == data
+        return
 Cachy()
