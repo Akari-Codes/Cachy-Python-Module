@@ -44,9 +44,16 @@ class Cachy:
                 os.remove(session_path)
         return
     
-    def deposit(self, data, id):
-        self.cache_container.append({"id":id, "data":data})
-        print("[Log] Cached item - " + id)
+    def deposit(self, data, id, multi=False):
+        count = -1
+        if multi == True:
+            while count != len(id)-1:
+                count = count + 1
+                self.cache_container.append({"id":id[count],"data":data[count]})
+                print("[Log] Cached item - " + id)
+        else:
+            self.cache_container.append({"id":id, "data":data})
+            print("[Log] Cached item - " + id)
         return
     
     def withdraw(self, id, mode=0):
