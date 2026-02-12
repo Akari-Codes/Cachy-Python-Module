@@ -169,8 +169,8 @@ class Cachy:
             count = -1
             while count != len(id)-1:
                 for x in self.cache_container:
-                    if x["id"] == id:
-                        x["data"] == data
+                    if x["id"] == id[count]:
+                        x["data"] == data[count]
             return
         else:
             for x in self.cache_container:
