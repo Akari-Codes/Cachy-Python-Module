@@ -50,7 +50,7 @@ class Cachy:
             while count != len(id)-1:
                 count = count + 1
                 self.cache_container.append({"id":id[count],"data":data[count]})
-                print("[Log] Cached item - " + id)
+                print("[Log] Cached item - " + id[count])
         else:
             self.cache_container.append({"id":id, "data":data})
             print("[Log] Cached item - " + id)
