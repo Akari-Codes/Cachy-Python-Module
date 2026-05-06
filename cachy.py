@@ -4,42 +4,69 @@ import os
 subprocess.check_call([sys.executable, "-m", "pip", "install", "pathlib", "joblib"])
 from pathlib import Path
 import joblib
+class settings:
+    def __init__(self):
+        self.settings_path = Path(os.getcwd() + "/cachy_settings.conf")
+        if not self.settings_path.exists():
+            settings_data = joblib.load(self.settings_path)
+            if settings_data.id["cache_path"] == "!!default!!" or settings_data.id["session_path"] == "!!default!!":
+                if settings_data.id["cache_path"] == "!!default!!":
+                    self.cache_path_data = str(self.cache_path)
+                if settings_data.id["session_path"] == "!!default!!":
+                    self.session_path_data = str(self.session_path)
+            else:
+                self.cache_path_data = settings_data.id["cache_path"]
+                self.session_path_data = settings_data.id["session_path"]
+        else:
+            self.settings_path.touch()
+            default = """
+{id:
+{cache_path:!!default!!},
+{session_path:!!default!!}
+}
+"""
+            joblib.write(default, self.settings_path)
+            self.__init__()
+    def get_cache_path(self):
+        return self.cache_path_data
+    def get_session_path(self):
+        return self.session_path_data
+
 class Cachy:
     def __init__(self):
-        cache_path = Path(os.getcwd() + "/bin/cache/")
-        if not Path(os.getcwd() + "/bin/").exists():
-            Path(os.getcwd() + "/bin/").mkdir()
-        if not cache_path.exists():
-            cache_path.mkdir()
-        if not Path(os.getcwd() + "/bin/cache/sessions/").exists():
-            Path(os.getcwd() + "/bin/cache/sessions/").mkdir()
+        self.cache_path = settings.get_cache_path()
+        self.session_path = settings.get_session_path
+        if not self.cache_path.exists():
+            self.cache_path.mkdir(parents=True, exist_ok=True)
+        if not self.session_path.exists():
+            self.session_path.mkdir(parents=True, exist_ok=True)
         self.cache_container = []
         print("[Alert] Cacher Rutime Initialized!")
         return
 
     def session_save(self, name="session_default"):
-        session_path = Path(os.getcwd() + "/bin/cache/sessions/" + name + ".session")
+        session_path = Path(str(self.session_path) + name + ".session")
         session_path.touch()
         joblib.dump(self.cache_container, session_path)
         return
 
     def session_load(self, name="session_default"):
-        session_path = Path(os.getcwd() + "/bin/cache/sessions/" + name + ".session")
+        session_path = Path(str(self.session_path)+ name + ".session")
         session_path.touch()
         self.cache_container = joblib.load(session_path)
         return
     
     def session_clear(self, name="session_default"):
-        session_path = Path(os.getcwd() + "/bin/cache/sessions/" + name + ".session")
+        session_path = Path(str(self.session_path)+ name + ".session")
         session_path.touch()
         os.remove(session_path)
         return
     
     def session_clear_all(self):
-        listed_dir = os.listdir(Path(os.getcwd() + "/bin/cache/sessions/"))
+        listed_dir = os.listdir(Path(str(self.session_path)))
         for x in listed_dir:
             if x[-8:] == ".session":
-                session_path = Path(os.getcwd() + "/bin/cache/sessions/" + x)
+                session_path = Path(str(self.session_path)+ x)
                 session_path.touch()
                 os.remove(session_path)
         return
@@ -90,10 +117,10 @@ class Cachy:
         self.cache_container.append({"id":id, "data":data})
         print("[Log] Cached item - " + id)
         print("[Log] Making Local Save of Cached item...")
-        cache_path = Path(os.getcwd() + "/bin/cache/")
+        cache_path = Path(str(self.cache_path))
         if not cache_path.exists():
             cache_path.mkdir()
-        cache_file_path = Path(os.getcwd() + "/bin/cache/" + id + ".tmp")
+        cache_file_path = Path(str(self.cache_path) + id + ".tmp")
         print(cache_path)
         cache_file_path.touch()
         for x in self.cache_container:
@@ -109,8 +136,8 @@ class Cachy:
         return
     
     def load(self, id):
-        cache_path = Path(os.getcwd() + "/bin/cache/")
-        cache_file_path = Path(os.getcwd() + "/bin/cache/" + id + ".tmp")
+        cache_path = Path(str(self.cache_path))
+        cache_file_path = Path(str(self.cache_path) + id + ".tmp")
         try:
             with open(cache_file_path, 'r') as f:
                 data = f.read()
@@ -123,9 +150,9 @@ class Cachy:
         return data
 
     def save_item(self, id):
-        cache_path = Path(os.getcwd() + "/bin/cache/")
+        cache_path = Path(str(self.cache_path))
         cache_path.mkdir()
-        cache_file_path = Path(os.getcwd() + "/bin/cache/" + id + ".tmp")
+        cache_file_path = Path(str(self.cache_path) + id + ".tmp")
         cache_file_path.touch()
         for x in self.cache_container:
             if x["id"] == id:
@@ -139,8 +166,8 @@ class Cachy:
         return
 
     def destroy_item(self, id):
-        cache_path = Path(os.getcwd() + "/bin/cache/")
-        cache_file_path = Path(os.getcwd() + "/bin/cache/" + id + ".tmp")
+        cache_path = Path(str(self.cache_path))
+        cache_file_path = Path(str(self.cache_path) + id + ".tmp")
         os.remove(cache_file_path)
         count = -1
         for x in self.cache_container:
@@ -153,15 +180,15 @@ class Cachy:
         return
 
     def unsave(self, id):
-        cache_path = Path(os.getcwd() + "/bin/cache/")
-        cache_file_path = Path(os.getcwd() + "/bin/cache/" + id + ".tmp")
+        cache_path = Path(str(self.cache_path))
+        cache_file_path = Path(str(self.cache_path) + id + ".tmp")
         os.remove(cache_file_path)
     
     def clear_all(self):
         self.clear()
-        files = os.listdir(Path(os.getcwd() + "/bin/cache/"))
+        files = os.listdir(Path(str(self.cache_path)))
         for x in files:
-            os.remove(Path(os.getcwd() + "/bin/cache/" + x))
+            os.remove(Path(str(self.cache_path) + x))
         return
 
     def edit(self, data, id, multi=False):
